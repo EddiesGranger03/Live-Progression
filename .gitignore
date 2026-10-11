@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.angular/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/
+artifacts/
+.sites-runtime/
+.sites-checkout/
