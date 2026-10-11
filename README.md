@@ -2,6 +2,8 @@
 
 **Solo Leveling là sản phẩm của startup LP (Live Progresssion).**
 
+Repository của nhóm: [EddiesGranger03/Live-Progression](https://github.com/EddiesGranger03/Live-Progression).
+
 Website tiếng Việt theo bản đồ màn hình v0.2 và các ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng.
 
 ## Đội ngũ dự án

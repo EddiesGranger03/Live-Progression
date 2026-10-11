@@ -37,12 +37,18 @@ git commit -m "Prepare Solo Leveling source and Docker deployment"
 
 ## Kết nối GitHub
 
-Thư mục làm việc hiện tại trên máy Sơn đã có lịch sử Git. **Giữ nguyên lịch sử**, không xóa `.git` hoặc chạy `git init` lại. Kiểm tra remote trên máy bằng `git remote -v`. Gói ZIP không chứa `.git`; để push đúng lịch sử đã chuẩn bị trên máy này, dùng thư mục `solo-leveling` gốc.
-
-Tạo một repository trống trên GitHub (chưa thêm README/license/gitignore tự động), thay `YOUR_ACCOUNT/solo-leveling` bằng repository của nhóm. Thêm remote tên `github` để tránh đổi các remote khác nếu có:
+Repository của nhóm là **[EddiesGranger03/Live-Progression](https://github.com/EddiesGranger03/Live-Progression)**. Trên máy Sơn, remote `github` đã trỏ đến repository này; commit `LICENSE` có sẵn được giữ trong lịch sử. Với các thay đổi mới đã commit trên máy này, dùng:
 
 ```powershell
-git remote add github https://github.com/YOUR_ACCOUNT/solo-leveling.git
+git push github main
+```
+
+Thư mục làm việc hiện tại trên máy Sơn đã có lịch sử Git. **Giữ nguyên lịch sử**, không xóa `.git` hoặc chạy `git init` lại. Kiểm tra remote trên máy bằng `git remote -v`. Gói ZIP không chứa `.git`; để push đúng lịch sử đã chuẩn bị trên máy này, dùng thư mục `solo-leveling` gốc.
+
+Nếu kết nối một bản làm việc khác chưa có remote `github`, có thể thêm bằng:
+
+```powershell
+git remote add github https://github.com/EddiesGranger03/Live-Progression.git
 git push github HEAD:main
 ```
 
