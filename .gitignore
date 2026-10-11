@@ -1,12 +1,77 @@
+# Angular / Node: dependencies, builds and test output
 node_modules/
 dist/
 .angular/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Python: virtual environments, caches and packaging output
 .venv/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+*.egg-info/
+build/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local configuration and credentials; keep only sanitized examples
 .env
+.env.*
+!.env.example
+!.env.docker.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+service-account*.json
+secrets*.json
+
+# Runtime databases and private user data
 data/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+/uploads/
+/backups/
+/dumps/
+
+# Local verification and hosting metadata
 artifacts/
+.openai/
 .sites-runtime/
 .sites-checkout/
+.codex/
+
+# Handoff packages and image exports belong outside source control
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+
+# Editor, OS and temporary output
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.log.*
+*.tmp
+*.bak
+*.swp

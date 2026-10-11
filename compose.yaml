@@ -1,0 +1,33 @@
+name: solo-leveling
+
+services:
+  web:
+    image: solo-leveling-mvp:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${SOLO_PORT:-8080}:8000"
+    environment:
+      SOLO_DB_PATH: /app/data/solo.db
+      SOLO_PUBLIC_URL: "${SOLO_PUBLIC_URL:-http://localhost:8080}"
+      SOLO_ALLOWED_ORIGINS: "${SOLO_ALLOWED_ORIGINS:-http://localhost:8080,http://127.0.0.1:8080}"
+      SMTP_HOST: "${SMTP_HOST:-}"
+      SMTP_PORT: "${SMTP_PORT:-587}"
+      SMTP_USER: "${SMTP_USER:-}"
+      SMTP_PASSWORD: "${SMTP_PASSWORD:-}"
+      SMTP_FROM: "${SMTP_FROM:-no-reply@example.com}"
+    volumes:
+      - solo_data:/app/data
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  solo_data:

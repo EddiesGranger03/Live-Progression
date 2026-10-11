@@ -1,11 +1,14 @@
 import {chromium,expect} from '@playwright/test';
 import fs from 'node:fs';
+const baseUrl=(process.env.SOLO_TEST_URL||'http://127.0.0.1:8000').replace(/\/$/,'');
 const browser=await chromium.launch({channel:'msedge',headless:true});
 const context=await browser.newContext({viewport:{width:1440,height:960},timezoneId:'Asia/Ho_Chi_Minh'});
 const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const email=`qa-${Date.now()}@example.com`,password='qa-password-12345';
 try{
-  await page.goto('http://127.0.0.1:8000/login');
+  await page.goto(`${baseUrl}/login`);
+  await expect(page).toHaveTitle('Solo Leveling · LP — Live Progresssion');
+  await expect(page.getByText('Sản phẩm của LP · Live Progresssion',{exact:true})).toBeVisible();
   await expect(page.getByRole('heading',{name:'Chào mừng trở lại.'})).toBeVisible();
   await page.getByRole('link',{name:'Tạo tài khoản',exact:true}).click();
   await page.getByLabel('Tên hiển thị',{exact:true}).fill('Người kiểm thử');
@@ -14,6 +17,9 @@ try{
   await page.getByLabel('Nhập lại mật khẩu',{exact:true}).fill(password);
   await page.getByRole('button',{name:'Tạo tài khoản',exact:true}).click();
   await expect(page).toHaveURL(/onboarding\/goals/);
+  const sessionCookie=(await context.cookies()).find(cookie=>cookie.name==='solo_session');
+  expect(sessionCookie?.httpOnly).toBe(true);
+  expect(sessionCookie?.secure).toBe(new URL(baseUrl).protocol==='https:');
   await page.locator('.onboarding-goals button').filter({hasText:'Học tập'}).click();
   await page.getByRole('button',{name:'Tiếp tục',exact:true}).click();
   await expect(page).toHaveURL(/onboarding\/schedule/);
@@ -42,7 +48,7 @@ try{
   await expect(page.getByRole('dialog')).toContainText('40/200 XP');
   await page.getByRole('button',{name:'Về Hôm nay',exact:true}).click();
   await expect(page.locator('.pending-banner')).toHaveCount(0);
-  await page.goto('http://127.0.0.1:8000/profile');
+  await page.goto(`${baseUrl}/profile`);
   await page.getByRole('button',{name:'Đăng xuất',exact:true}).click();
   await page.getByRole('dialog').getByRole('button',{name:'Đăng xuất',exact:true}).click();
   await page.getByLabel('Email',{exact:true}).fill(email);
@@ -54,6 +60,6 @@ try{
   fs.writeFileSync('artifacts/server-browser-results.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
 }finally{
   // Remove only the temporary account created by this verification.
-  await context.request.post('http://127.0.0.1:8000/api/v1/auth/delete',{data:{confirmation:'XÓA'}}).catch(()=>{});
+  await context.request.post(`${baseUrl}/api/v1/auth/delete`,{data:{confirmation:'XÓA'}}).catch(()=>{});
   await browser.close();
 }

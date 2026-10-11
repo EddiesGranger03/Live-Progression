@@ -1,0 +1,17 @@
+# Optional: enable only when intentionally sharing the local app on the Internet.
+# The tunnel shares the web network namespace so Uvicorn trusts its loopback
+# proxy headers, including HTTPS. No wildcard proxy trust or extra port is needed.
+services:
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: ["tunnel", "--no-autoupdate", "--protocol", "http2", "--url", "http://127.0.0.1:8000"]
+    network_mode: service:web
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: "no"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

@@ -18,7 +18,7 @@ import {dateLabel} from './core/models';
     @if(s.pending().length){<button class="pending-banner" (click)="s.open('pending')"><sl-icon name="clock"/>{{s.pending().length}} thao tác chờ đồng bộ <span>Xem chi tiết →</span></button>}
     @if(s.active()){<a [routerLink]="['/focus',s.active()!.id]" class="active-banner"><span class="pulse"></span>Focus đang chạy · {{s.active()!.title}}<span>Tiếp tục <sl-icon name="right"/></span></a>}
     <main class="main-content" id="main-content">@if(s.loading()){<div class="skeleton"></div><div class="skeleton tall"></div>}@else if(s.authenticated()){<router-outlet/>}@else{<div class="empty-state"><sl-icon name="shield"/><h2>Không gian của riêng bạn</h2><a routerLink="/login" class="btn primary">Đăng nhập</a></div>}</main>
-    <footer class="page-footer">SOLO LEVELING <span>Giữ sự tập trung. Tiến bộ ngoài đời.</span>@if(s.demo()){<small>Dữ liệu mẫu · Lưu trên thiết bị</small>}</footer>
+    <footer class="page-footer">SOLO LEVELING · LP <span>Live Progresssion</span>@if(s.demo()){<small>Dữ liệu mẫu · Lưu trên thiết bị</small>}</footer>
   </div>
 } @else {<router-outlet/>}
 @if(s.dialog()){<sl-dialog/>}

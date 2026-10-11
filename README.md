@@ -1,10 +1,33 @@
 # Solo Leveling — Web MVP v0.2
 
+**Solo Leveling là sản phẩm của startup LP (Live Progresssion).**
+
 Website tiếng Việt theo bản đồ màn hình v0.2 và các ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng.
+
+## Đội ngũ dự án
+
+| Thành viên | Vai trò trong dự án | Phụ trách |
+| --- | --- | --- |
+| **Nguyễn Vũ Gia Long** | Người sáng lập (Founder), Business Analyst (BA) | Truyền thông, giới thiệu dự án, phân tích nghiệp vụ và yêu cầu sản phẩm. |
+| **Nguyễn Khánh Sơn** | Đồng sáng lập (Co-founder), Developer | Phát triển phần mềm và kỹ thuật. |
+
+Đây là vai trò của đội ngũ xây dựng sản phẩm. Quyền tài khoản trong ứng dụng được thiết kế riêng theo nhu cầu vận hành; xem [đề xuất phân quyền](docs/ACCESS_CONTROL_PLAN.md).
+
+## Mã nguồn để đưa lên GitHub
+
+**Dùng thư mục `solo-leveling` này làm repository duy nhất.** Mã nguồn đã gồm Angular, FastAPI và Docker; không cần tạo hai repository MVP/Docker.
+
+| Bản trên Desktop | Mục đích |
+| --- | --- |
+| `solo-leveling/` | Mã nguồn đang phát triển, dùng để commit/push lên GitHub. |
+| `Solo_Leveling_GitHub_Ready.zip` | Gói nguồn sạch từ commit đã chuẩn bị, gồm Docker và chia sẻ HTTPS; không chứa dữ liệu riêng, dependency hay bản build. |
+| `Solo_Leveling_Packages/archive/` | Lưu hai ZIP bàn giao MVP/Docker trước đây để tham khảo. |
+
+Commit `frontend/`, `backend/`, `docs/`, `scripts/`, `Dockerfile`, các file Compose, `.dockerignore`, `.gitignore`, `.gitattributes`, các file cấu hình và lockfile. `.gitignore` loại dependency/build/cache, `.env` thực, database, dữ liệu người dùng, ZIP và cấu hình hosting cục bộ; hai file `.env.example` và `.env.docker.example` được giữ làm mẫu. Hướng dẫn kiểm tra và kết nối GitHub nằm trong [docs/GITHUB.md](docs/GITHUB.md).
 
 ## Mở nhanh trên máy này
 
-Nhấp đúp `Mo-Solo-Leveling.cmd`, rồi mở **http://127.0.0.1:8000**. Cần Node.js 24.15+ và Python 3.11+. Bản build đã có trong `dist`, vì vậy không cần build lại để xem.
+Nhấp đúp `Mo-Solo-Leveling.cmd`, rồi mở **http://127.0.0.1:8000**. Cần Node.js 24.15+ và Python 3.11+. `start.ps1` tự build frontend lần đầu nếu chưa có `dist`; bản build trên máy này được giữ để mở nhanh. Gói GitHub Ready chứa mã nguồn, Docker tự build khi chạy.
 
 Hoặc dùng PowerShell tại thư mục dự án:
 
@@ -14,11 +37,43 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1
 
 Tạo tài khoản riêng từ trang Đăng nhập → Tạo tài khoản. Tài khoản mới bắt đầu Level 1, 0 XP, không có dữ liệu mẫu. Chọn “Mở bản trải nghiệm” nếu muốn xem thiết kế có dữ liệu Gia Long.
 
+## Chạy bằng Docker Desktop
+
+Mở Docker Desktop ở chế độ Linux containers. Nhấp đúp `Mo-Solo-Leveling-Docker.cmd`, hoặc chạy tại thư mục dự án:
+
+```powershell
+docker compose up -d --build --wait --wait-timeout 120
+```
+
+Mở **http://localhost:8080**. Docker tự build Angular và cài Python trong image; máy chỉ cần Docker Desktop, không cần cài Node.js/Python. API và giao diện chạy chung container `web`; API docs tại **http://localhost:8080/docs**. Lần build đầu cần Internet để tải base image và dependency.
+
+SQLite được lưu trong volume `solo-leveling_solo_data`, độc lập với thư mục `data` khi chạy trực tiếp bằng Python. Tài khoản và dữ liệu vẫn còn sau khi restart, build lại hoặc `docker compose down` rồi bật lại. Image không chứa database trên máy, `.env`, mật khẩu SMTP hay các tài khoản cũ. Container chạy bằng user thường, filesystem chỉ đọc; riêng thư mục dữ liệu có quyền ghi.
+
+```powershell
+docker compose ps
+docker compose logs --tail 100 web
+docker compose restart web
+docker compose down
+docker compose up -d --wait
+```
+
+`down` dừng và gỡ container của dự án. **Không thêm `-v` nếu muốn giữ dữ liệu**, vì cờ đó xóa volume. Docker chỉ mở cổng trên máy này qua `127.0.0.1`.
+
+Nếu muốn đổi cổng hoặc cấu hình email, sao chép `.env.docker.example` thành `.env`, sửa các giá trị rồi chạy lại `docker compose up -d --build --wait`. Khi đổi `SOLO_PORT`, cập nhật cả `SOLO_PUBLIC_URL` và `SOLO_ALLOWED_ORIGINS`. Nếu đã có `.env` từ cách chạy Python ở cổng 8000, cập nhật URL cho cổng Docker đang dùng. Không commit `.env`.
+
+## Chia sẻ bản đầy đủ cho Long qua Internet
+
+Nhấp đúp **`Chia-Se-Cho-Long.cmd`**. Script build/chạy Docker, tạo Cloudflare Quick Tunnel và in link HTTPS dạng `https://…trycloudflare.com`. Gửi link đó cho Long; Long chọn **Tạo tài khoản** để có dữ liệu riêng trên backend FastAPI. Không gửi link `localhost`, vì địa chỉ đó chỉ mở trên chính máy bạn.
+
+Máy, Docker và kết nối Internet cần tiếp tục hoạt động. Link là bản thử tạm, đổi khi tạo lại tunnel; không phải hosting độc lập 24/7. Dữ liệu nằm trong Docker volume hiện tại và không mất khi tắt link. Nhấp **`Tat-Link-Chia-Se.cmd`** để ngừng chia sẻ; website local vẫn chạy. Link mới nhất được lưu tại `artifacts/share-link.txt`, được Git bỏ qua.
+
+Chi tiết vận hành và hướng triển khai ổn định: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ## Hai chế độ
 
 | Chế độ | Tài khoản và lưu dữ liệu |
 | --- | --- |
-| FastAPI local, cổng 8000 | Đăng ký/đăng nhập thực; cookie HttpOnly; SQLite trong `data/solo.db`; dữ liệu tách theo tài khoản. |
+| FastAPI local cổng 8000, hoặc Docker cổng 8080 | Đăng ký/đăng nhập thực; cookie HttpOnly; SQLite trong `data/solo.db` hoặc Docker volume; dữ liệu tách theo tài khoản. |
 | Website trải nghiệm trên Sites hoặc preview cổng 4173 | Angular với dữ liệu mẫu; lưu localStorage trên thiết bị. Không có backend Python hay tài khoản cloud ở hosting tĩnh. |
 
 Link Sites là bản riêng tư của người sở hữu. Muốn nhóm test dùng API qua Internet cần triển khai FastAPI và cấu hình quyền chia sẻ phù hợp.
@@ -38,7 +93,7 @@ Link Sites là bản riêng tư của người sở hữu. Muốn nhóm test dù
 
 ## Email đặt lại mật khẩu
 
-Luồng và API đã có, nhưng cần SMTP của bạn để gửi email thực. Sao chép `.env.example` thành `.env`, điền SMTP và `SOLO_PUBLIC_URL`, rồi khởi động lại bằng `start.ps1`. Không có SMTP thì API trả thông báo chưa cấu hình; không giả vờ đã gửi email. Token đặt lại hết hạn sau 30 phút, lưu dạng hash, dùng một lần và thu hồi phiên cũ sau đổi mật khẩu. Chưa có email xác minh tài khoản.
+Luồng và API đã có, nhưng cần SMTP của bạn để gửi email thực. Sao chép `.env.example` thành `.env` khi chạy Python, hoặc dùng `.env.docker.example` khi chạy Docker; điền SMTP và `SOLO_PUBLIC_URL`, rồi khởi động lại bằng `start.ps1` hoặc `docker compose up -d`. Không có SMTP thì API trả thông báo chưa cấu hình; không giả vờ đã gửi email. Token đặt lại hết hạn sau 30 phút, lưu dạng hash, dùng một lần và thu hồi phiên cũ sau đổi mật khẩu. Chưa có email xác minh tài khoản.
 
 ## Phát triển và kiểm thử
 
@@ -56,6 +111,14 @@ Kiểm tra Edge tự động (cần Edge được cài và các server tương �
 
 ```powershell
 node scripts/verify.mjs
+node scripts/verify-server.mjs
+```
+
+Kiểm tra Docker đang chạy ở cổng 8080 (script Python restart rồi tạo lại riêng container `web`, giữ volume và xóa tài khoản kiểm thử sau khi xong):
+
+```powershell
+python scripts/verify-docker.py
+$env:SOLO_TEST_URL='http://localhost:8080'
 node scripts/verify-server.mjs
 ```
 
