@@ -1,0 +1,31 @@
+name: Đề xuất tính năng
+description: Đề xuất cải thiện trải nghiệm hoặc khả năng của ứng dụng.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Vấn đề cần giải quyết
+      description: Ai gặp vấn đề, trong tình huống nào?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Giải pháp mong muốn
+      description: Mô tả luồng hoặc kết quả mong muốn.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Phương án khác đã cân nhắc
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Quyền riêng tư và quyền hệ điều hành
+      options:
+        - label: Tôi đã nêu rõ nếu đề xuất cần quyền nhạy cảm, dữ liệu cá nhân hoặc tích hợp hệ điều hành.
+          required: true

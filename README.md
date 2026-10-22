@@ -1,10 +1,10 @@
-# Solo Leveling — Web MVP v0.2
+# Solo Leveling — MVP v0.2
 
 **Solo Leveling là sản phẩm của startup LP (Live Progresssion).**
 
 Repository của nhóm: [EddiesGranger03/Live-Progression](https://github.com/EddiesGranger03/Live-Progression).
 
-Website tiếng Việt theo bản đồ màn hình v0.2 và các ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng.
+Ứng dụng tiếng Việt gồm web Angular/FastAPI và vỏ Android/iOS bằng Capacitor, theo bản đồ màn hình v0.2 và bộ ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng. Android có tích hợp bảo vệ Focus tự nguyện; iOS hiện chưa có Screen Time restriction và chưa được build trên Xcode.
 
 ## Đội ngũ dự án
 
@@ -135,3 +135,11 @@ Kết quả và ảnh nằm trong `artifacts`. Các kiểm thử backend dùng d
 Chưa thuộc web MVP: iPhone Screen Time, chặn mạng xã hội ở hệ điều hành, Google Calendar OAuth, AI/Computer Vision, GPS, marketplace, thanh toán. Phút timer không phải thời gian tập trung đã xác minh.
 
 Font Be Vietnam Pro theo SIL Open Font License, đóng gói qua `@fontsource/be-vietnam-pro`; avatar/logo SVG được vẽ riêng cho bản dựng. Tham khảo kỹ thuật: [Angular compatibility](https://angular.dev/reference/versions), [FastAPI security](https://fastapi.tiangolo.com/tutorial/security/).
+
+## Đóng góp, demo và bảo trì
+
+- [Hướng dẫn đóng góp](CONTRIBUTING.md) và các mẫu GitHub Issues nằm trong `.github/ISSUE_TEMPLATE/`.
+- [Issues công khai](https://github.com/EddiesGranger03/Live-Progression/issues) theo dõi kiểm thử Android, hỗ trợ iOS và bảo trì staging/production.
+- [Kết quả CI](.github/workflows/ci.yml) chạy kiểm tra frontend, backend, Android và iOS trên pull request vào `main`.
+- [Bằng chứng demo](docs/USAGE_EVIDENCE.md) ghi rõ ảnh chụp emulator, kiểm thử đã chạy và giới hạn số liệu người dùng.
+- [Lịch bảo trì](docs/MAINTENANCE.md) theo dõi việc cần làm; [CHANGELOG](CHANGELOG.md) ghi lịch sử phiên bản.

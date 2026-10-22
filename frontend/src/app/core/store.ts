@@ -1,13 +1,15 @@
-import {Injectable,computed,signal} from '@angular/core';
+import {Injectable,computed,signal,effect,inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {State,Profile,Quest,Block,Session,Dialog,WindowSlot,localDate,timeText,minutes,fromLocal,shiftDate} from './models';
+import {State,Profile,Quest,Block,Session,QuickSession,Dialog,WindowSlot,localDate,timeText,minutes,fromLocal,shiftDate} from './models';
 import {seedState} from './seed';
+import {VoluntaryProtectionService} from './voluntary-protection';
 
 declare global {interface Window {SOLO_CONFIG?:{mode:string;api:string};}}
 const CACHE='solo-leveling-demo-v2';
 
 @Injectable({providedIn:'root'})
 export class AppStore {
+  private nativeProtection=inject(VoluntaryProtectionService);
   readonly state=signal<State>(seedState());
   readonly demo=signal(window.SOLO_CONFIG?.mode!=='server');
   readonly authenticated=signal(false);
@@ -25,20 +27,27 @@ export class AppStore {
   readonly level=computed(()=>1+Math.floor(this.state().xp/200));
   readonly xpPart=computed(()=>this.state().xp%200);
   readonly active=computed(()=>this.state().sessions.find(s=>s.status==='active')??null);
+  readonly activeQuick=computed(()=>this.state().quickSessions.find(s=>s.status==='active'||s.status==='elapsed')??null);
   readonly todayQuests=computed(()=>this.state().quests.filter(q=>q.date===this.today()&&q.status!=='archived'));
   private toastTimer:any;
   private api=window.SOLO_CONFIG?.api||'/api/v1';
   constructor(private router:Router){
+    effect(()=>{
+      const session=this.active();
+      const preference=this.profile().protection??{enabled:false,breakInterval:50};
+      if(session)void this.nativeProtection.beginFocus(session.id,session.targetEnd,session.title,preference.enabled,preference.breakInterval,this.nativeProtection.blockingEnabled());
+      else if(this.nativeProtection.hasActiveFocusProtection())void this.nativeProtection.stopFocus();
+    });
     this.load();
     setInterval(()=>{this.now.set(Date.now());this.settle();},1000);
     window.addEventListener('online',()=>{this.online.set(true);if(!this.demo())this.syncPending();});
     window.addEventListener('offline',()=>this.online.set(false));
-    window.addEventListener('storage',e=>{if(e.key===CACHE&&this.demo()&&e.newValue){try{this.state.set(JSON.parse(e.newValue));}catch{}}});
+    window.addEventListener('storage',e=>{if(e.key===CACHE&&this.demo()&&e.newValue){try{this.state.set(this.normalizeState(JSON.parse(e.newValue)));}catch{}}});
     window.addEventListener('focus',()=>{if(!this.demo()&&this.authenticated())this.refresh();});
   }
   async load(){
     if(this.demo()){
-      try{const cached=localStorage.getItem(CACHE);if(cached)this.state.set(JSON.parse(cached));}catch{}
+      try{const cached=localStorage.getItem(CACHE);if(cached)this.state.set(this.normalizeState(JSON.parse(cached)));}catch{}
       this.authenticated.set(true);
     }else{
       try{this.state.set(await this.request('/state'));this.cacheServer();this.authenticated.set(true);}catch{const cached=sessionStorage.getItem('solo-server-cache');if(!this.online()&&cached){this.state.set(JSON.parse(cached));this.authenticated.set(true);}else this.router.navigateByUrl('/login');}
@@ -46,6 +55,7 @@ export class AppStore {
     if(!this.demo()){try{const saved=JSON.parse(sessionStorage.getItem('solo-pending')||'{}');if(saved.email===this.profile().email)this.pending.set(saved.actions||[]);}catch{}}
     this.loading.set(false);this.settle();if(this.online()&&this.pending().length)this.syncPending();
   }
+  private normalizeState(value:State):State{return {...value,goals:value.goals||[],quests:(value.quests||[]).map(q=>({...q,goalId:q.goalId||null})),quickSessions:value.quickSessions||[],profile:{...value.profile,protection:value.profile.protection??{enabled:false,breakInterval:50}}};}
   async request(path:string,body?:any):Promise<any>{
     const response=await fetch(this.api+path,{method:body===undefined?'GET':'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});
     const result=await response.json();
@@ -67,7 +77,7 @@ export class AppStore {
         const result=await this.request('/actions',{...item,revision:item.revision+applied});
         this.state.set(result);this.cacheServer();this.dropPending(item.mutationId);applied++;
         if(item.kind==='quest.complete'&&this.dialog()?.kind==='complete'&&this.dialog()?.data?.id===item.data.id)this.open('result',this.quest(item.data.id));
-        else if(['quest.save','block.save','profile.save'].includes(item.kind)&&this.dialog())this.close();
+        else if(['quest.save','goal.save','goal.priority','goal.archive','block.save','profile.save'].includes(item.kind)&&this.dialog())this.close();
       }catch(e:any){if(e.status){this.pending.update(q=>q.map(p=>p.mutationId===item.mutationId?{...p,error:e.message}:p));this.saveQueue();}else break;}
     }if(applied)this.notify('Đã đồng bộ '+applied+' thao tác');}finally{this.syncing=false;}
   }
@@ -89,7 +99,7 @@ export class AppStore {
         try{const cached=localStorage.getItem(CACHE);if(cached)this.state.set(JSON.parse(cached));}catch{}
         const next=structuredClone(this.state());this.applyDemo(next,kind,data,mutationId);next.revision++;this.state.set(next);this.persist();
       }else{
-        if(!this.online())return this.queue(kind,data,mutationId);
+        if(!this.online()){if(kind.startsWith('quick.'))throw new Error('Việc ngắn cần kết nối mạng để lưu thời điểm và kết quả.');return this.queue(kind,data,mutationId);}
         try{this.state.set(await this.request('/actions',{kind,data,mutationId,revision:this.state().revision}));}catch(e){if(e instanceof TypeError)return this.queue(kind,data,mutationId);throw e;}
         this.cacheServer();
       }
@@ -98,12 +108,25 @@ export class AppStore {
   }
   private applyDemo(s:State,kind:string,d:any,mutation:string){
     const timestamp=new Date().toISOString(), id=()=>crypto.randomUUID();
-    const quest=s.quests.find(q=>q.id===d.id);
-    if(kind==='quest.save'){
+    const quest=s.quests.find(q=>q.id===d.id), goal=s.goals.find(g=>g.id===d.id);
+    if(kind==='goal.save'){
+      if(!d.title?.trim()||d.title.trim().length>100||d.description?.length>500)throw new Error('Tên mục tiêu cần có 1–100 ký tự, mô tả tối đa 500 ký tự.');
+      if(goal)Object.assign(goal,{title:d.title.trim(),description:d.description||''});
+      else s.goals.push({id:id(),title:d.title.trim(),description:d.description||'',priority:'normal',status:'active',createdAt:timestamp});
+    }else if(kind==='goal.priority'){
+      if(!goal||!['normal','high'].includes(d.priority))throw new Error('Không tìm thấy mục tiêu hoặc mức ưu tiên không hợp lệ.');
+      goal.priority=d.priority;
+    }else if(kind==='goal.archive'){
+      if(!goal)throw new Error('Không tìm thấy mục tiêu.');
+      goal.status=d.archived?'archived':'active';
+    }else if(kind==='quest.save'){
       if(!d.title?.trim()||d.title.trim().length>100||d.description?.length>500||d.duration<5||d.duration>120)throw new Error('Tên 1–100 ký tự, mô tả tối đa 500 ký tự, thời lượng 5–120 phút.');
-      if(quest?.status==='completed'&&(quest.duration!==d.duration||quest.date!==d.date||quest.goal!==d.goal))throw new Error('Nhiệm vụ đã hoàn thành chỉ sửa tên và ghi chú.');
-      if(quest)Object.assign(quest,d,{title:d.title.trim()});
-      else s.quests.push({...d,title:d.title.trim(),id:id(),timezone:s.profile.timezone,status:'pending',completedAt:null});
+      const linked=d.goalId?s.goals.find(g=>g.id===d.goalId):undefined;
+      if(d.goalId&&!linked)throw new Error('Không tìm thấy mục tiêu đã chọn.');
+      if(linked?.status==='archived'&&(!quest||quest.goalId!==linked.id))throw new Error('Không thể thêm nhiệm vụ vào mục tiêu đã lưu trữ.');
+      if(quest?.status==='completed'&&(quest.duration!==d.duration||quest.date!==d.date||quest.goal!==d.goal||(quest.goalId||null)!==(d.goalId||null)))throw new Error('Nhiệm vụ đã hoàn thành chỉ sửa tên và ghi chú.');
+      if(quest)Object.assign(quest,d,{goalId:d.goalId||null,title:d.title.trim()});
+      else s.quests.push({...d,goalId:d.goalId||null,title:d.title.trim(),id:id(),timezone:s.profile.timezone,status:'pending',completedAt:null});
     }else if(kind==='quest.complete'&&quest){
       if(quest.status==='archived')throw new Error('Nhiệm vụ đã lưu trữ.');
       if(quest.status!=='completed'){quest.status='completed';quest.completedAt=timestamp;s.ledger.push({id:mutation,questId:quest.id,amount:20,reason:'completion',createdAt:timestamp,localDate:localDate(timestamp,s.profile.timezone),timezone:s.profile.timezone});s.xp+=20;}
@@ -141,15 +164,29 @@ export class AppStore {
       s.sessions.push({id:id(),title:q?.title||b!.title,questId:q?.id||b?.questId||null,blockId:b?.id||null,start:timestamp,targetEnd:new Date(Date.now()+duration*60000).toISOString(),actualEnd:null,status:'active',timezone:s.profile.timezone});
     }else if(kind==='focus.end'){
       const session=s.sessions.find(s=>s.id===d.id);if(session&&session.status==='active'){session.status='ended_early';session.actualEnd=timestamp;}
+    }else if(kind==='quick.start'){
+      if(!d.title?.trim()||![2,5,10].includes(d.duration))throw new Error('Chọn việc nhỏ và thời lượng 2, 5 hoặc 10 phút.');
+      if(s.sessions.some(x=>x.status==='active'))throw new Error('Hãy kết thúc hoặc tiếp tục phiên Focus trước.');
+      if((s.quickSessions||[]).some(x=>x.status==='active'||x.status==='elapsed'))throw new Error('Hãy xác nhận kết quả việc ngắn đang mở trước.');
+      const q=d.questId?s.quests.find(q=>q.id===d.questId):undefined;
+      if(d.questId&&(!q||q.status!=='pending'))throw new Error('Chỉ gắn việc ngắn với nhiệm vụ đang chờ.');
+      s.quickSessions??=[];
+      s.quickSessions.push({id:id(),title:d.title.trim(),goal:d.goal||'Cá nhân',questId:q?.id||null,duration:d.duration,start:timestamp,targetEnd:new Date(Date.now()+d.duration*60000).toISOString(),actualEnd:null,status:'active',outcome:null});
+    }else if(kind==='quick.finish'){
+      const quick=s.quickSessions?.find(x=>x.id===d.id);
+      if(!quick||!['active','elapsed'].includes(quick.status)||!['done','unfinished','rest','skipped'].includes(d.outcome))throw new Error('Không thể xác nhận kết quả việc ngắn này.');
+      quick.status='ended';quick.actualEnd=timestamp;quick.outcome=d.outcome;
     }
   }
   private settle(){
     const expired=this.state().sessions.filter(s=>s.status==='active'&&Date.parse(s.targetEnd)<=this.now());
-    if(!expired.length)return;
-    if(this.demo()){this.state.update(s=>({...s,sessions:s.sessions.map(x=>expired.includes(x)?{...x,status:'completed',actualEnd:x.targetEnd}:x)}));this.persist();}
-    else if(!this.online()){this.state.update(s=>({...s,sessions:s.sessions.map(x=>expired.includes(x)?{...x,status:'completed',actualEnd:x.targetEnd}:x)}));this.cacheServer();}
+    const quickExpired=this.state().quickSessions.filter(s=>s.status==='active'&&Date.parse(s.targetEnd)<=this.now());
+    if(!expired.length&&!quickExpired.length)return;
+    const apply=(s:State):State=>({...s,sessions:s.sessions.map(x=>expired.includes(x)?{...x,status:'completed' as const,actualEnd:x.targetEnd}:x),quickSessions:s.quickSessions.map(x=>quickExpired.includes(x)?{...x,status:'elapsed' as const,actualEnd:x.targetEnd}:x)});
+    if(this.demo()){this.state.update(apply);this.persist();}
+    else if(!this.online()){this.state.update(apply);this.cacheServer();}
     else if(!this.busy())this.refresh();
-    this.remindEnded(expired[0]);
+    if(expired.length)this.remindEnded(expired[0]);
   }
   private remindEnded(session:Session){
     if(!this.profile().reminders)return;

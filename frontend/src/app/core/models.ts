@@ -1,9 +1,12 @@
-export interface Profile { name:string; email:string; timezone:string; goals:string[]; activeStart:string; activeEnd:string; rests:{start:string;end:string}[]; calendarEnabled:boolean; reminders:boolean; reminderLimit:number; onboarding:boolean; }
-export interface Quest { id:string; title:string; description:string; duration:number; goal:string; date:string; timezone:string; status:'pending'|'completed'|'archived'; completedAt:string|null; }
+export interface VoluntaryProtection { enabled:boolean; breakInterval:number; }
+export interface Profile { name:string; email:string; timezone:string; goals:string[]; activeStart:string; activeEnd:string; rests:{start:string;end:string}[]; calendarEnabled:boolean; reminders:boolean; reminderLimit:number; protection?:VoluntaryProtection; onboarding:boolean; }
+export interface Goal { id:string; title:string; description:string; priority:'normal'|'high'; status:'active'|'archived'; createdAt:string; }
+export interface Quest { id:string; title:string; description:string; duration:number; goal:string; goalId:string|null; date:string; timezone:string; status:'pending'|'completed'|'archived'; completedAt:string|null; }
 export interface Block { id:string; title:string; start:string; end:string; type:'busy'|'rest'; focus:boolean|number; questId:string|null; }
 export interface Session { id:string; title:string; start:string; targetEnd:string; actualEnd:string|null; status:'active'|'completed'|'ended_early'; questId:string|null; blockId:string|null; timezone?:string; }
+export interface QuickSession { id:string; title:string; goal:string; questId:string|null; duration:2|5|10; start:string; targetEnd:string; actualEnd:string|null; status:'active'|'elapsed'|'ended'; outcome:'done'|'unfinished'|'rest'|'skipped'|null; }
 export interface Ledger { id:string; questId:string; amount:number; reason:string; createdAt:string; localDate:string; timezone:string; }
-export interface State { profile:Profile; quests:Quest[]; blocks:Block[]; sessions:Session[]; ledger:Ledger[]; xp:number; revision:number; }
+export interface State { profile:Profile; goals:Goal[]; quests:Quest[]; blocks:Block[]; sessions:Session[]; quickSessions:QuickSession[]; ledger:Ledger[]; xp:number; revision:number; }
 export type Dialog = {kind:string; data?:any};
 export interface WindowSlot {start:number;end:number;date:string;}
 

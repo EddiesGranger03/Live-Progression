@@ -1,0 +1,1 @@
+Precisely edit only these text values in this reward screenshot: the background top profile must be Tổng 460 XP and 60 / 200 XP, not 440 and 40, matching reward sheet. Background task metadata must be 5 phút instead of Focus 12 phút. Preserve entire reward sheet +20 XP, 460 XP, Level 3, 60/200 and all other layout/text/colors exactly.

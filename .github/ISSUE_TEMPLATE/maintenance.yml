@@ -1,0 +1,32 @@
+name: Bảo trì
+description: Theo dõi dependency, bảo mật, tài liệu hoặc hạ tầng.
+title: "[Maintenance]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Khu vực
+      options:
+        - Frontend
+        - Backend
+        - Android
+        - iOS
+        - CI/CD
+        - Tài liệu
+        - Hạ tầng
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Lý do và bằng chứng
+      description: Nêu phiên bản, log hoặc rủi ro đang được xử lý.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Tiêu chí hoàn tất
+      description: Mô tả cách xác nhận thay đổi an toàn.
+    validations:
+      required: true

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Solo Leveling</string>
+    <string name="social_restriction_service_name">Solo Leveling · Che app đã chọn trong Focus</string>
+    <string name="social_restriction_service_description">Khi bạn tự bật và có phiên Focus, nhận diện tên package của TikTok, Instagram hoặc Facebook mà bạn đã chọn để phủ lời nhắc. Không đọc chữ, cây giao diện, tin nhắn, hình ảnh hay nội dung nhập. Có thể tạm bỏ qua hoặc tắt bất cứ lúc nào.</string>
+    <string name="title_activity_main">Solo Leveling</string>
+    <string name="package_name">com.liveprogression.sololeveling</string>
+    <string name="custom_url_scheme">com.liveprogression.sololeveling</string>
+</resources>

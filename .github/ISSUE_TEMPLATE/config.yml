@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Hướng dẫn đóng góp
+    url: https://github.com/EddiesGranger03/Live-Progression/blob/main/CONTRIBUTING.md
+    about: Đọc quy tắc, cách chạy kiểm tra và cách gửi pull request.

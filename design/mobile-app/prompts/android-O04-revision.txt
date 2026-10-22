@@ -1,0 +1,1 @@
+Use case: text-localization. Edit this mobile app screenshot precisely. Change ONLY time beside Ôn 5 từ đã học from 25 phút to 5 phút. Also replace the short description under Kết nối lịch with Đọc lịch bên ngoài để hỗ trợ kế hoạch. Preserve everything else: layout, headings, expanded-stage badge, buttons, colors and all other text. No redesign.

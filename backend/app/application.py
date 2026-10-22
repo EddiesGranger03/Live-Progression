@@ -4,7 +4,7 @@ from uuid import uuid4
 from zoneinfo import ZoneInfo
 from . import database
 from .domain import utc_now,parse_time,overlaps,XP_PER_QUEST,UNDO_SECONDS
-from .schemas import QuestWrite,BlockWrite,ProfileWrite,Action
+from .schemas import QuestWrite,GoalWrite,GoalPriority,GoalArchive,BlockWrite,ProfileWrite,QuickActionStart,QuickActionFinish,Action
 
 class RuleError(Exception):
     def __init__(self,message,code=400):
@@ -19,20 +19,28 @@ def settle_sessions(db,user_id):
     now=utc_now().isoformat()
     db.execute("UPDATE focus_sessions SET status='completed',actual_end=target_end WHERE user_id=? AND status='active' AND target_end<=?",(user_id,now))
 
+def settle_quick_sessions(db,user_id):
+    now=utc_now().isoformat()
+    db.execute("UPDATE quick_sessions SET status='elapsed',actual_end=target_end WHERE user_id=? AND status='active' AND target_end<=?",(user_id,now))
+
 def state(db,user_id):
     settle_sessions(db,user_id)
+    settle_quick_sessions(db,user_id)
     user=db.execute('SELECT * FROM users WHERE id=?',(user_id,)).fetchone()
     if not user: raise RuleError('Phiên đăng nhập đã kết thúc.',401)
     profile=json.loads(user['profile'])|{'email':user['email']}
+    profile.setdefault('protection',{'enabled':False,'breakInterval':50})
+    goals=[dict(r) for r in db.execute('SELECT * FROM goals WHERE user_id=? ORDER BY rowid',(user_id,))]
     quests=[dict(r) for r in db.execute('SELECT * FROM quests WHERE user_id=? ORDER BY rowid',(user_id,))]
     blocks=[dict(r) for r in db.execute('SELECT * FROM blocks WHERE user_id=? ORDER BY start',(user_id,))]
     sessions=[dict(r) for r in db.execute('SELECT * FROM focus_sessions WHERE user_id=? ORDER BY start',(user_id,))]
+    quick_sessions=[dict(r) for r in db.execute('SELECT * FROM quick_sessions WHERE user_id=? ORDER BY start',(user_id,))]
     ledger=[dict(r) for r in db.execute('SELECT * FROM ledger WHERE user_id=? ORDER BY created_at',(user_id,))]
     def camel(row):
-        mapping={'quest_id':'questId','completed_at':'completedAt','block_id':'blockId','target_end':'targetEnd','actual_end':'actualEnd','created_at':'createdAt','local_date':'localDate'}
+        mapping={'quest_id':'questId','goal_id':'goalId','completed_at':'completedAt','block_id':'blockId','target_end':'targetEnd','actual_end':'actualEnd','created_at':'createdAt','local_date':'localDate'}
         return {mapping.get(k,k):v for k,v in row.items() if k!='user_id'}
-    return {'profile':profile,'quests':list(map(camel,quests)),'blocks':list(map(camel,blocks)),
-            'sessions':list(map(camel,sessions)),'ledger':list(map(camel,ledger)),
+    return {'profile':profile,'goals':list(map(camel,goals)),'quests':list(map(camel,quests)),'blocks':list(map(camel,blocks)),
+            'sessions':list(map(camel,sessions)),'quickSessions':list(map(camel,quick_sessions)),'ledger':list(map(camel,ledger)),
             'xp':max(0,sum(r['amount'] for r in ledger)),'revision':user['revision']}
 
 def execute(user_id,action:Action):
@@ -45,16 +53,38 @@ def execute(user_id,action:Action):
             raise RuleError('Dữ liệu đã thay đổi. Vui lòng xem bản mới rồi lưu lại.',409)
         now=utc_now()
         profile=current['profile']
-        if kind=='quest.save':
+        if kind=='goal.save':
+            goal=GoalWrite.model_validate(d)
+            if goal.id:
+                owned(db,'goals',user_id,goal.id)
+                db.execute('UPDATE goals SET title=?,description=? WHERE id=?',(goal.title,goal.description,goal.id))
+            else:
+                db.execute('INSERT INTO goals(id,user_id,title,description,priority,status,created_at) VALUES(?,?,?,?,?,?,?)',
+                           (str(uuid4()),user_id,goal.title,goal.description,'normal','active',now.isoformat()))
+        elif kind=='goal.priority':
+            priority=GoalPriority.model_validate(d)
+            owned(db,'goals',user_id,priority.id)
+            db.execute('UPDATE goals SET priority=? WHERE id=?',(priority.priority,priority.id))
+        elif kind=='goal.archive':
+            goal=GoalArchive.model_validate(d)
+            owned(db,'goals',user_id,goal.id)
+            db.execute('UPDATE goals SET status=? WHERE id=?',('archived' if goal.archived else 'active',goal.id))
+        elif kind=='quest.save':
             q=QuestWrite.model_validate(d)
             if q.goal!='Cá nhân' and q.goal not in profile['goals']: raise RuleError('Chọn một mục tiêu trong hồ sơ của bạn.')
+            if q.id: old=owned(db,'quests',user_id,q.id)
+            else: old=None
+            if q.goalId:
+                linked_goal=owned(db,'goals',user_id,q.goalId)
+                if linked_goal['status']=='archived' and (old is None or old['goal_id']!=q.goalId):
+                    raise RuleError('Không thể liên kết nhiệm vụ mới với mục tiêu đã lưu trữ.')
             if q.id:
-                old=owned(db,'quests',user_id,q.id)
-                if old['status']=='completed' and (q.duration!=old['duration'] or str(q.date)!=old['date'] or q.goal!=old['goal']):
+                if old['status']=='completed' and (q.duration!=old['duration'] or str(q.date)!=old['date'] or q.goal!=old['goal'] or q.goalId!=old['goal_id']):
                     raise RuleError('Nhiệm vụ đã hoàn thành chỉ sửa tên và ghi chú.')
-                db.execute('UPDATE quests SET title=?,description=?,duration=?,goal=?,date=? WHERE id=?',(q.title,q.description,q.duration,q.goal,str(q.date),q.id))
+                db.execute('UPDATE quests SET title=?,description=?,duration=?,goal=?,date=?,goal_id=? WHERE id=?',(q.title,q.description,q.duration,q.goal,str(q.date),q.goalId,q.id))
             else:
-                db.execute('INSERT INTO quests VALUES(?,?,?,?,?,?,?,?,?,?)',(str(uuid4()),user_id,q.title,q.description,q.duration,q.goal,str(q.date),profile['timezone'],'pending',None))
+                db.execute('INSERT INTO quests(id,user_id,title,description,duration,goal,date,timezone,status,completed_at,goal_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                           (str(uuid4()),user_id,q.title,q.description,q.duration,q.goal,str(q.date),profile['timezone'],'pending',None,q.goalId))
         elif kind in ('quest.complete','quest.undo','quest.archive'):
             q=owned(db,'quests',user_id,d.get('id'))
             if kind=='quest.complete':
@@ -120,6 +150,21 @@ def execute(user_id,action:Action):
         elif kind=='focus.end':
             session=owned(db,'focus_sessions',user_id,d.get('id'))
             if session['status']=='active': db.execute("UPDATE focus_sessions SET status='ended_early',actual_end=? WHERE id=?",(now.isoformat(),session['id']))
+        elif kind=='quick.start':
+            quick=QuickActionStart.model_validate(d)
+            if any(x['status']=='active' for x in current['sessions']): raise RuleError('Hãy kết thúc hoặc tiếp tục phiên Focus trước khi bắt đầu việc ngắn.',409)
+            if any(x['status'] in ('active','elapsed') for x in current['quickSessions']): raise RuleError('Hãy xác nhận kết quả việc ngắn đang mở trước.',409)
+            if quick.questId:
+                q=owned(db,'quests',user_id,quick.questId)
+                if q['status']!='pending': raise RuleError('Chỉ gắn việc ngắn với nhiệm vụ đang chờ.')
+            start=now
+            db.execute('INSERT INTO quick_sessions(id,user_id,title,goal,quest_id,duration,start,target_end,actual_end,status,outcome) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                       (str(uuid4()),user_id,quick.title,quick.goal,quick.questId,quick.duration,start.isoformat(),(start+timedelta(minutes=quick.duration)).isoformat(),None,'active',None))
+        elif kind=='quick.finish':
+            quick=QuickActionFinish.model_validate(d)
+            session=owned(db,'quick_sessions',user_id,quick.id)
+            if session['status'] not in ('active','elapsed'): raise RuleError('Việc ngắn này đã được xác nhận.')
+            db.execute("UPDATE quick_sessions SET status='ended',actual_end=?,outcome=? WHERE id=?",(now.isoformat(),quick.outcome,session['id']))
         elif kind=='profile.save':
             p=ProfileWrite.model_validate(d)
             db.execute('UPDATE users SET profile=? WHERE id=?',(p.model_dump_json(),user_id))

@@ -56,6 +56,13 @@ artifacts/
 .sites-checkout/
 .codex/
 
+# Native build output and machine-specific Android SDK location
+android/.gradle/
+android/local.properties
+android/build/
+android/app/build/
+android/capacitor-cordova-android-plugins/build/
+
 # Handoff packages and image exports belong outside source control
 *.zip
 *.7z
@@ -75,3 +82,26 @@ Desktop.ini
 *.tmp
 *.bak
 *.swp
+
+# Private browser profile and one-off VLearn login/OTP debugging files at repo root
+/.vlearn-browser-profile/
+/CLAUDE.md
+/Solo_Leveling_Ban_ban_giao_MVP.docx
+/after_otp_submit.png
+/login_after_submit.png
+/login_current_state.png
+/login_filled.png
+/otp_typed.png
+/check_state.mjs
+/crawler_vlearn.mjs
+/debug_login.mjs
+/dump_otp_html.mjs
+/enter_new_otp.mjs
+/find_inputs.mjs
+/inspect_otp_screen.mjs
+/run_crawler_with_otp.mjs
+/test_login_and_inspect.mjs
+/test_otp_typing.mjs
+/test_playwright_edge.js
+/test_playwright_real_profile.mjs
+/try_otp_direct.mjs

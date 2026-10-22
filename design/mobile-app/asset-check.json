@@ -1,0 +1,1351 @@
+{
+  "expected": 168,
+  "found": 168,
+  "missing": [],
+  "assets": [
+    {
+      "id": "A01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1500915,
+      "valid": true
+    },
+    {
+      "id": "A01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1438150,
+      "valid": true
+    },
+    {
+      "id": "A02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1492549,
+      "valid": true
+    },
+    {
+      "id": "A02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1456082,
+      "valid": true
+    },
+    {
+      "id": "A03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1484965,
+      "valid": true
+    },
+    {
+      "id": "A03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1425997,
+      "valid": true
+    },
+    {
+      "id": "A04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1495710,
+      "valid": true
+    },
+    {
+      "id": "A04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1421349,
+      "valid": true
+    },
+    {
+      "id": "A05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1588360,
+      "valid": true
+    },
+    {
+      "id": "A05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1399460,
+      "valid": true
+    },
+    {
+      "id": "A06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1466917,
+      "valid": true
+    },
+    {
+      "id": "A06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1444802,
+      "valid": true
+    },
+    {
+      "id": "A07",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1549552,
+      "valid": true
+    },
+    {
+      "id": "A07",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1389949,
+      "valid": true
+    },
+    {
+      "id": "O01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1665398,
+      "valid": true
+    },
+    {
+      "id": "O01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1572884,
+      "valid": true
+    },
+    {
+      "id": "O02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1553025,
+      "valid": true
+    },
+    {
+      "id": "O02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1455069,
+      "valid": true
+    },
+    {
+      "id": "O03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1486156,
+      "valid": true
+    },
+    {
+      "id": "O03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1377214,
+      "valid": true
+    },
+    {
+      "id": "O04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1609133,
+      "valid": true
+    },
+    {
+      "id": "O04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1562811,
+      "valid": true
+    },
+    {
+      "id": "H01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1461867,
+      "valid": true
+    },
+    {
+      "id": "H01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1591505,
+      "valid": true
+    },
+    {
+      "id": "H02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1613030,
+      "valid": true
+    },
+    {
+      "id": "H02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1548257,
+      "valid": true
+    },
+    {
+      "id": "H03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1387278,
+      "valid": true
+    },
+    {
+      "id": "H03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1307384,
+      "valid": true
+    },
+    {
+      "id": "G01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1427919,
+      "valid": true
+    },
+    {
+      "id": "G01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1308740,
+      "valid": true
+    },
+    {
+      "id": "G02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1324039,
+      "valid": true
+    },
+    {
+      "id": "G02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1344117,
+      "valid": true
+    },
+    {
+      "id": "G03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1309353,
+      "valid": true
+    },
+    {
+      "id": "G03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1251482,
+      "valid": true
+    },
+    {
+      "id": "G04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1324340,
+      "valid": true
+    },
+    {
+      "id": "G04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1280924,
+      "valid": true
+    },
+    {
+      "id": "G05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1223209,
+      "valid": true
+    },
+    {
+      "id": "G05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1347171,
+      "valid": true
+    },
+    {
+      "id": "G06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1390349,
+      "valid": true
+    },
+    {
+      "id": "G06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1313864,
+      "valid": true
+    },
+    {
+      "id": "Q01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1379292,
+      "valid": true
+    },
+    {
+      "id": "Q01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1358826,
+      "valid": true
+    },
+    {
+      "id": "Q02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1381607,
+      "valid": true
+    },
+    {
+      "id": "Q02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1376205,
+      "valid": true
+    },
+    {
+      "id": "Q03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1328793,
+      "valid": true
+    },
+    {
+      "id": "Q03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1293766,
+      "valid": true
+    },
+    {
+      "id": "Q04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1392873,
+      "valid": true
+    },
+    {
+      "id": "Q04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1338101,
+      "valid": true
+    },
+    {
+      "id": "Q05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1566024,
+      "valid": true
+    },
+    {
+      "id": "Q05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1594412,
+      "valid": true
+    },
+    {
+      "id": "Q06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1337210,
+      "valid": true
+    },
+    {
+      "id": "Q06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1326912,
+      "valid": true
+    },
+    {
+      "id": "Q07",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1289410,
+      "valid": true
+    },
+    {
+      "id": "Q07",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1263790,
+      "valid": true
+    },
+    {
+      "id": "Q08",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1349037,
+      "valid": true
+    },
+    {
+      "id": "Q08",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1347289,
+      "valid": true
+    },
+    {
+      "id": "Q09",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1270359,
+      "valid": true
+    },
+    {
+      "id": "Q09",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1312992,
+      "valid": true
+    },
+    {
+      "id": "Q10",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1445646,
+      "valid": true
+    },
+    {
+      "id": "Q10",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1424872,
+      "valid": true
+    },
+    {
+      "id": "Q11",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1473198,
+      "valid": true
+    },
+    {
+      "id": "Q11",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1385899,
+      "valid": true
+    },
+    {
+      "id": "M01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1348582,
+      "valid": true
+    },
+    {
+      "id": "M01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1404969,
+      "valid": true
+    },
+    {
+      "id": "M02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1521751,
+      "valid": true
+    },
+    {
+      "id": "M02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1437263,
+      "valid": true
+    },
+    {
+      "id": "M03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1443211,
+      "valid": true
+    },
+    {
+      "id": "M03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1456852,
+      "valid": true
+    },
+    {
+      "id": "M04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1359447,
+      "valid": true
+    },
+    {
+      "id": "M04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1386870,
+      "valid": true
+    },
+    {
+      "id": "C01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1335339,
+      "valid": true
+    },
+    {
+      "id": "C01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1350656,
+      "valid": true
+    },
+    {
+      "id": "C02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1354578,
+      "valid": true
+    },
+    {
+      "id": "C02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1303326,
+      "valid": true
+    },
+    {
+      "id": "C03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1378199,
+      "valid": true
+    },
+    {
+      "id": "C03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1388411,
+      "valid": true
+    },
+    {
+      "id": "C04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1332558,
+      "valid": true
+    },
+    {
+      "id": "C04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1336348,
+      "valid": true
+    },
+    {
+      "id": "C05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1362766,
+      "valid": true
+    },
+    {
+      "id": "C05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1302183,
+      "valid": true
+    },
+    {
+      "id": "C06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1466911,
+      "valid": true
+    },
+    {
+      "id": "C06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1441648,
+      "valid": true
+    },
+    {
+      "id": "C07",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1420049,
+      "valid": true
+    },
+    {
+      "id": "C07",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1357863,
+      "valid": true
+    },
+    {
+      "id": "C08",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1352483,
+      "valid": true
+    },
+    {
+      "id": "C08",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1288914,
+      "valid": true
+    },
+    {
+      "id": "C09",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1315376,
+      "valid": true
+    },
+    {
+      "id": "C09",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1286445,
+      "valid": true
+    },
+    {
+      "id": "F01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1432052,
+      "valid": true
+    },
+    {
+      "id": "F01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1427975,
+      "valid": true
+    },
+    {
+      "id": "F02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1514118,
+      "valid": true
+    },
+    {
+      "id": "F02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1436558,
+      "valid": true
+    },
+    {
+      "id": "F03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1378843,
+      "valid": true
+    },
+    {
+      "id": "F03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1538483,
+      "valid": true
+    },
+    {
+      "id": "F04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1563091,
+      "valid": true
+    },
+    {
+      "id": "F04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1451883,
+      "valid": true
+    },
+    {
+      "id": "F05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1381525,
+      "valid": true
+    },
+    {
+      "id": "F05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1384811,
+      "valid": true
+    },
+    {
+      "id": "F06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1503316,
+      "valid": true
+    },
+    {
+      "id": "F06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1386265,
+      "valid": true
+    },
+    {
+      "id": "B01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1438738,
+      "valid": true
+    },
+    {
+      "id": "B01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1458542,
+      "valid": true
+    },
+    {
+      "id": "B02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1546434,
+      "valid": true
+    },
+    {
+      "id": "B02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1574734,
+      "valid": true
+    },
+    {
+      "id": "B03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1384377,
+      "valid": true
+    },
+    {
+      "id": "B03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1399447,
+      "valid": true
+    },
+    {
+      "id": "B04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1534909,
+      "valid": true
+    },
+    {
+      "id": "B04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1541537,
+      "valid": true
+    },
+    {
+      "id": "B05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1424385,
+      "valid": true
+    },
+    {
+      "id": "B05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1365252,
+      "valid": true
+    },
+    {
+      "id": "B06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1463708,
+      "valid": true
+    },
+    {
+      "id": "B06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1463246,
+      "valid": true
+    },
+    {
+      "id": "P01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1649708,
+      "valid": true
+    },
+    {
+      "id": "P01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1416146,
+      "valid": true
+    },
+    {
+      "id": "P02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1393175,
+      "valid": true
+    },
+    {
+      "id": "P02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1383975,
+      "valid": true
+    },
+    {
+      "id": "P03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1349534,
+      "valid": true
+    },
+    {
+      "id": "P03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1346430,
+      "valid": true
+    },
+    {
+      "id": "U01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1360515,
+      "valid": true
+    },
+    {
+      "id": "U01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1354971,
+      "valid": true
+    },
+    {
+      "id": "U02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1413279,
+      "valid": true
+    },
+    {
+      "id": "U02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1346709,
+      "valid": true
+    },
+    {
+      "id": "U03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1453104,
+      "valid": true
+    },
+    {
+      "id": "U03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1508627,
+      "valid": true
+    },
+    {
+      "id": "U04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1457749,
+      "valid": true
+    },
+    {
+      "id": "U04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1427630,
+      "valid": true
+    },
+    {
+      "id": "U05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1393527,
+      "valid": true
+    },
+    {
+      "id": "U05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1341767,
+      "valid": true
+    },
+    {
+      "id": "U06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1364749,
+      "valid": true
+    },
+    {
+      "id": "U06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1365505,
+      "valid": true
+    },
+    {
+      "id": "U07",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1371576,
+      "valid": true
+    },
+    {
+      "id": "U07",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1314267,
+      "valid": true
+    },
+    {
+      "id": "S01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1311997,
+      "valid": true
+    },
+    {
+      "id": "S01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1274503,
+      "valid": true
+    },
+    {
+      "id": "S02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1476249,
+      "valid": true
+    },
+    {
+      "id": "S02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1443019,
+      "valid": true
+    },
+    {
+      "id": "S03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1359615,
+      "valid": true
+    },
+    {
+      "id": "S03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1300768,
+      "valid": true
+    },
+    {
+      "id": "S04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1473767,
+      "valid": true
+    },
+    {
+      "id": "S04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1399124,
+      "valid": true
+    },
+    {
+      "id": "S05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1455794,
+      "valid": true
+    },
+    {
+      "id": "S05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1431158,
+      "valid": true
+    },
+    {
+      "id": "S06",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1446858,
+      "valid": true
+    },
+    {
+      "id": "S06",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1400369,
+      "valid": true
+    },
+    {
+      "id": "S07",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1381536,
+      "valid": true
+    },
+    {
+      "id": "S07",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1279390,
+      "valid": true
+    },
+    {
+      "id": "S08",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1543440,
+      "valid": true
+    },
+    {
+      "id": "S08",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1354827,
+      "valid": true
+    },
+    {
+      "id": "S09",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1315092,
+      "valid": true
+    },
+    {
+      "id": "S09",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1281923,
+      "valid": true
+    },
+    {
+      "id": "S10",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1425433,
+      "valid": true
+    },
+    {
+      "id": "S10",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1385542,
+      "valid": true
+    },
+    {
+      "id": "I01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1485273,
+      "valid": true
+    },
+    {
+      "id": "I01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1339477,
+      "valid": true
+    },
+    {
+      "id": "I02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1404470,
+      "valid": true
+    },
+    {
+      "id": "I02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1485179,
+      "valid": true
+    },
+    {
+      "id": "I03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1594695,
+      "valid": true
+    },
+    {
+      "id": "I03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1634355,
+      "valid": true
+    },
+    {
+      "id": "I04",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1400341,
+      "valid": true
+    },
+    {
+      "id": "I04",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1438128,
+      "valid": true
+    },
+    {
+      "id": "I05",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1473533,
+      "valid": true
+    },
+    {
+      "id": "I05",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1465686,
+      "valid": true
+    },
+    {
+      "id": "R01",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1655531,
+      "valid": true
+    },
+    {
+      "id": "R01",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1652673,
+      "valid": true
+    },
+    {
+      "id": "R02",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1452021,
+      "valid": true
+    },
+    {
+      "id": "R02",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1533345,
+      "valid": true
+    },
+    {
+      "id": "R03",
+      "platform": "ios",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1364449,
+      "valid": true
+    },
+    {
+      "id": "R03",
+      "platform": "android",
+      "width": 887,
+      "height": 1774,
+      "bytes": 1482883,
+      "valid": true
+    }
+  ]
+}

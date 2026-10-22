@@ -89,7 +89,8 @@ def signup(data:Credentials,request:Request,response:Response):
     user_id=str(uuid4())
     profile={'name':data.name.strip(),'timezone':'Asia/Ho_Chi_Minh','goals':[],
              'activeStart':'08:00','activeEnd':'22:00','rests':[{'start':'12:00','end':'13:00'}],
-             'calendarEnabled':True,'reminders':False,'reminderLimit':3,'onboarding':False}
+             'calendarEnabled':True,'reminders':False,'reminderLimit':3,
+             'protection':{'enabled':False,'breakInterval':50},'onboarding':False}
     if not profile['name']: raise HTTPException(422,'Vui lòng nhập tên.')
     with database.transaction() as db:
         if db.execute('SELECT id FROM users WHERE email=?',(data.email.lower().strip(),)).fetchone(): raise HTTPException(409,'Không thể tạo tài khoản với email này. Hãy đăng nhập hoặc đặt lại mật khẩu.')

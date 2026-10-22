@@ -14,7 +14,7 @@
             "browser": "frontend/src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "index": "frontend/src/index.html",
-            "styles": ["frontend/src/styles.css"],
+          "styles": ["frontend/src/styles.css", "frontend/src/mobile-features.css"],
             "assets": [{ "glob": "**/*", "input": "frontend/public" }],
             "outputPath": { "base": "dist", "browser": "" },
             "outputHashing": "all"

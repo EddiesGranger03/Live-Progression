@@ -1,0 +1,1 @@
+Precisely change misleading timer copy: replace Bạn đã tập trung trong 25 phút. with Bộ đếm giờ đã kết thúc. Replace Thời gian Focus with Thời lượng trên timer. Add small text Hết giờ chưa cộng XP. above bottom buttons. Preserve all other layout, text, 25 phút, colors and buttons. Do not claim measured attention.

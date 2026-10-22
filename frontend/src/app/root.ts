@@ -17,9 +17,11 @@ import {dateLabel} from './core/models';
     @if(!s.online()){<div class="offline-banner"><sl-icon name="wifi"/>Đang ngoại tuyến · {{s.demo()?'Dữ liệu được lưu trên thiết bị này.':'Thao tác mới được lưu trên thiết bị và chờ đồng bộ.'}}</div>}
     @if(s.pending().length){<button class="pending-banner" (click)="s.open('pending')"><sl-icon name="clock"/>{{s.pending().length}} thao tác chờ đồng bộ <span>Xem chi tiết →</span></button>}
     @if(s.active()){<a [routerLink]="['/focus',s.active()!.id]" class="active-banner"><span class="pulse"></span>Focus đang chạy · {{s.active()!.title}}<span>Tiếp tục <sl-icon name="right"/></span></a>}
+    @if(s.activeQuick()){<a routerLink="/quick-action" class="active-banner quick-active-banner"><span class="pulse"></span>{{s.activeQuick()!.status==='elapsed'?'Việc ngắn chờ xác nhận':'Việc ngắn đang chạy'}} · {{s.activeQuick()!.title}}<span>{{s.activeQuick()!.status==='elapsed'?'Kết quả':'Mở timer'}} <sl-icon name="right"/></span></a>}
     <main class="main-content" id="main-content">@if(s.loading()){<div class="skeleton"></div><div class="skeleton tall"></div>}@else if(s.authenticated()){<router-outlet/>}@else{<div class="empty-state"><sl-icon name="shield"/><h2>Không gian của riêng bạn</h2><a routerLink="/login" class="btn primary">Đăng nhập</a></div>}</main>
     <footer class="page-footer">SOLO LEVELING · LP <span>Live Progresssion</span>@if(s.demo()){<small>Dữ liệu mẫu · Lưu trên thiết bị</small>}</footer>
   </div>
+  <nav class="mobile-tabbar" aria-label="Điều hướng chính">@for(item of nav;track item.path){<a [routerLink]="item.path" routerLinkActive="active" [class.active]="item.path==='/today'&&url().startsWith('/quests')"><sl-icon [name]="item.icon"/><span>{{item.label}}</span></a>}</nav>
 } @else {<router-outlet/>}
 @if(s.dialog()){<sl-dialog/>}
 @if(s.toast()){<div class="toast" role="status"><span class="toast-symbol"><sl-icon name="check"/></span><span>{{s.toast()}}</span>@if(s.toastUndo()){<button (click)="s.toastUndo()!()">Hoàn tác</button>}<button class="icon-btn" (click)="s.toast.set('')" aria-label="Đóng thông báo"><sl-icon name="close"/></button></div>}
@@ -29,5 +31,5 @@ export class Root {
  nav=[{path:'/today',label:'Hôm nay',icon:'home'},{path:'/calendar',label:'Lịch',icon:'calendar'},{path:'/progress',label:'Tiến bộ',icon:'chart'},{path:'/profile',label:'Cá nhân',icon:'user'}];
  constructor(){this.router.events.subscribe(e=>{if(e instanceof NavigationEnd){this.url.set(e.urlAfterRedirects);window.scrollTo({top:0,behavior:'instant'});}});}
  immersive(){return /^\/(focus|login|signup|forgot-password|reset-password|onboarding)/.test(this.url());}
- title(){const u=this.url();return u.startsWith('/quests/')?'Nhiệm vụ / Chi tiết':u.startsWith('/quests')?'Hôm nay / Nhiệm vụ':this.nav.find(n=>u.startsWith(n.path))?.label||'Hôm nay';}
+ title(){const u=this.url();return u.startsWith('/goals/')?(u.endsWith('/edit')?'Mục tiêu / Chỉnh sửa':u==='/goals/new'?'Mục tiêu / Tạo mới':'Mục tiêu / Chi tiết'):u.startsWith('/goals')?'Mục tiêu':u.startsWith('/quests/')?'Nhiệm vụ / Chi tiết':u.startsWith('/quests')?'Hôm nay / Nhiệm vụ':u.startsWith('/protection')?'Bảo vệ Focus':u.startsWith('/quick-action')?'Tôi có vài phút':this.nav.find(n=>u.startsWith(n.path))?.label||'Hôm nay';}
 }

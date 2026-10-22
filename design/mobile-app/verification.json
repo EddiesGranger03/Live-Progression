@@ -1,0 +1,200 @@
+{
+  "created": "2026-10-21T02:58:29.178Z",
+  "assets": 168,
+  "expectedAssets": 168,
+  "screenStates": 84,
+  "missing": [],
+  "boards": [
+    {
+      "group": "Tài khoản",
+      "platform": "ios",
+      "file": "boards/review-84/tài-khoản-ios.png",
+      "screens": 7
+    },
+    {
+      "group": "Tài khoản",
+      "platform": "android",
+      "file": "boards/review-84/tài-khoản-android.png",
+      "screens": 7
+    },
+    {
+      "group": "Khởi đầu",
+      "platform": "ios",
+      "file": "boards/review-84/khởi-đầu-ios.png",
+      "screens": 4
+    },
+    {
+      "group": "Khởi đầu",
+      "platform": "android",
+      "file": "boards/review-84/khởi-đầu-android.png",
+      "screens": 4
+    },
+    {
+      "group": "Hôm nay",
+      "platform": "ios",
+      "file": "boards/review-84/hôm-nay-ios.png",
+      "screens": 3
+    },
+    {
+      "group": "Hôm nay",
+      "platform": "android",
+      "file": "boards/review-84/hôm-nay-android.png",
+      "screens": 3
+    },
+    {
+      "group": "Mục tiêu",
+      "platform": "ios",
+      "file": "boards/review-84/mục-tiêu-ios.png",
+      "screens": 6
+    },
+    {
+      "group": "Mục tiêu",
+      "platform": "android",
+      "file": "boards/review-84/mục-tiêu-android.png",
+      "screens": 6
+    },
+    {
+      "group": "Nhiệm vụ",
+      "platform": "ios",
+      "file": "boards/review-84/nhiệm-vụ-ios.png",
+      "screens": 11
+    },
+    {
+      "group": "Nhiệm vụ",
+      "platform": "android",
+      "file": "boards/review-84/nhiệm-vụ-android.png",
+      "screens": 11
+    },
+    {
+      "group": "Vài phút",
+      "platform": "ios",
+      "file": "boards/review-84/vài-phút-ios.png",
+      "screens": 4
+    },
+    {
+      "group": "Vài phút",
+      "platform": "android",
+      "file": "boards/review-84/vài-phút-android.png",
+      "screens": 4
+    },
+    {
+      "group": "Lịch",
+      "platform": "ios",
+      "file": "boards/review-84/lịch-ios.png",
+      "screens": 9
+    },
+    {
+      "group": "Lịch",
+      "platform": "android",
+      "file": "boards/review-84/lịch-android.png",
+      "screens": 9
+    },
+    {
+      "group": "Focus",
+      "platform": "ios",
+      "file": "boards/review-84/focus-ios.png",
+      "screens": 6
+    },
+    {
+      "group": "Focus",
+      "platform": "android",
+      "file": "boards/review-84/focus-android.png",
+      "screens": 6
+    },
+    {
+      "group": "Bảo vệ",
+      "platform": "ios",
+      "file": "boards/review-84/bảo-vệ-ios.png",
+      "screens": 6
+    },
+    {
+      "group": "Bảo vệ",
+      "platform": "android",
+      "file": "boards/review-84/bảo-vệ-android.png",
+      "screens": 6
+    },
+    {
+      "group": "Tiến bộ",
+      "platform": "ios",
+      "file": "boards/review-84/tiến-bộ-ios.png",
+      "screens": 3
+    },
+    {
+      "group": "Tiến bộ",
+      "platform": "android",
+      "file": "boards/review-84/tiến-bộ-android.png",
+      "screens": 3
+    },
+    {
+      "group": "Cá nhân",
+      "platform": "ios",
+      "file": "boards/review-84/cá-nhân-ios.png",
+      "screens": 7
+    },
+    {
+      "group": "Cá nhân",
+      "platform": "android",
+      "file": "boards/review-84/cá-nhân-android.png",
+      "screens": 7
+    },
+    {
+      "group": "Trạng thái",
+      "platform": "ios",
+      "file": "boards/review-84/trạng-thái-ios.png",
+      "screens": 10
+    },
+    {
+      "group": "Trạng thái",
+      "platform": "android",
+      "file": "boards/review-84/trạng-thái-android.png",
+      "screens": 10
+    },
+    {
+      "group": "Mở rộng",
+      "platform": "ios",
+      "file": "boards/review-84/mở-rộng-ios.png",
+      "screens": 5
+    },
+    {
+      "group": "Mở rộng",
+      "platform": "android",
+      "file": "boards/review-84/mở-rộng-android.png",
+      "screens": 5
+    },
+    {
+      "group": "RPG tương lai",
+      "platform": "ios",
+      "file": "boards/review-84/rpg-tương-lai-ios.png",
+      "screens": 3
+    },
+    {
+      "group": "RPG tương lai",
+      "platform": "android",
+      "file": "boards/review-84/rpg-tương-lai-android.png",
+      "screens": 3
+    },
+    {
+      "group": "Bốn luồng chính",
+      "platform": "ios",
+      "file": "boards/review-84/overview-ios.png",
+      "screens": 4
+    },
+    {
+      "group": "Bốn luồng chính",
+      "platform": "android",
+      "file": "boards/review-84/overview-android.png",
+      "screens": 4
+    }
+  ],
+  "checks": [
+    "168 image files exist with valid PNG signatures and portrait dimensions",
+    "Prompt files exist for all catalog platform images",
+    "Gallery inline state IDs match catalog",
+    "Contact sheets were rendered from decoded source images (30 files)"
+  ],
+  "limitations": [
+    "Browser interaction and browser-rendered gallery layout were not checked in this run",
+    "This is design asset verification, not native app testing"
+  ],
+  "scope": "Static asset and catalog verification only"
+}

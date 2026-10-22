@@ -1,0 +1,50 @@
+name: Báo lỗi
+description: Báo lỗi có thể tái hiện trong Solo Leveling.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: Không đăng mật khẩu, token, dữ liệu người dùng hoặc ảnh chứa thông tin cá nhân. Xóa dữ liệu nhạy cảm khỏi log trước khi chia sẻ.
+  - type: input
+    id: version
+    attributes:
+      label: Phiên bản hoặc commit
+      placeholder: 0.2.0 hoặc mã commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Thiết bị và môi trường
+      placeholder: Android 15 / Pixel 8 hoặc Windows 11 / Edge
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Các bước tái hiện
+      description: Ghi các bước tối thiểu để thấy lại lỗi.
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Kết quả mong đợi
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Kết quả thực tế
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Log hoặc ảnh đã loại dữ liệu riêng
+      description: Đính kèm bằng chứng không chứa dữ liệu cá nhân hoặc bí mật.
+    validations:
+      required: false

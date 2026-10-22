@@ -1,0 +1,1 @@
+Edit only background: remove all three bottom circular music, pause, settings buttons below foreground dialog and fill plain navy. The task Ôn 5 từ đã học above timer must have empty circle instead of checked circle, since not completed. Preserve foreground dialog and remaining design exactly.

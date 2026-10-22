@@ -34,9 +34,52 @@ def test_rules():
     assert available_windows(840,960,[(840,900),(930,960)],[])==[(905,925)]
     assert available_windows(840,960,[(840,900),(930,960)],[(900,930)])==[]
 
+def test_goal_crud_linkage_priority_archive_and_restore(client):
+    signup(client)
+    created=action(client,'goal.save',{'title':'Học tiếng Anh','description':'Duy trì 15 phút mỗi ngày.'})
+    assert created.status_code==200,created.text
+    goal=created.json()['goals'][0]
+    assert goal['priority']=='normal' and goal['status']=='active' and goal['description']=='Duy trì 15 phút mỗi ngày.'
+
+    linked=action(client,'quest.save',{'title':'Ôn 5 từ mới','duration':10,'date':'2026-10-11','goal':'Cá nhân','goalId':goal['id']})
+    assert linked.status_code==200,linked.text
+    q=linked.json()['quests'][0]
+    assert q['goalId']==goal['id'] and q['goal']=='Cá nhân'
+
+    priority=action(client,'goal.priority',{'id':goal['id'],'priority':'high'})
+    assert priority.status_code==200 and priority.json()['goals'][0]['priority']=='high'
+    archived=action(client,'goal.archive',{'id':goal['id'],'archived':True})
+    assert archived.status_code==200 and archived.json()['goals'][0]['status']=='archived'
+    assert archived.json()['quests'][0]['goalId']==goal['id']
+    assert action(client,'quest.save',{'title':'Nhiệm vụ mới','duration':10,'date':'2026-10-11','goalId':goal['id']}).status_code==400
+    completed=action(client,'quest.complete',{'id':q['id']})
+    assert completed.status_code==200 and completed.json()['xp']==20
+    restored=action(client,'goal.archive',{'id':goal['id'],'archived':False})
+    assert restored.status_code==200 and restored.json()['goals'][0]['status']=='active'
+
+def test_goal_records_are_user_scoped(client):
+    signup(client);goal=action(client,'goal.save',{'title':'Riêng tư'}).json()['goals'][0]
+    client.post('/api/v1/auth/logout');signup(client,'other@example.com')
+    assert action(client,'goal.archive',{'id':goal['id']}).status_code==404
+    assert get(client)['goals']==[]
+
+def test_database_migration_adds_goal_link_without_changing_existing_quest(tmp_path,monkeypatch):
+    path=tmp_path/'legacy.db';monkeypatch.setattr(database,'DB_PATH',path)
+    with database.connection() as db:
+        db.execute('CREATE TABLE users(id TEXT PRIMARY KEY)')
+        db.execute('INSERT INTO users VALUES(?)',('user-1',))
+        db.execute('CREATE TABLE quests(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),title TEXT NOT NULL,description TEXT NOT NULL,duration INTEGER NOT NULL,goal TEXT NOT NULL,date TEXT NOT NULL,timezone TEXT NOT NULL,status TEXT NOT NULL,completed_at TEXT)')
+        db.execute("INSERT INTO quests VALUES('quest-1','user-1','Đọc sách','Ghi chú',10,'Học tập','2026-10-11','Asia/Ho_Chi_Minh','pending',NULL)")
+    database.initialize()
+    with database.connection() as db:
+        row=db.execute('SELECT id,title,goal_id FROM quests').fetchone()
+        assert tuple(row)==('quest-1','Đọc sách',None)
+        assert db.execute('PRAGMA user_version').fetchone()[0]==3
+
 def test_signup_is_empty_and_password_not_exposed(client):
     s=signup(client)
     assert s['xp']==0 and s['quests']==[] and not s['profile']['onboarding']
+    assert s['profile']['protection']=={'enabled':False,'breakInterval':50}
     assert 'password' not in str(s)
     with database.connection() as db:
         stored=db.execute('SELECT password FROM users').fetchone()[0]
@@ -121,6 +164,33 @@ def test_users_cannot_access_others_records(client):
 def test_stale_edit_rejected(client):
     signup(client);revision=get(client)['revision'];q=quest(client)
     assert action(client,'quest.save',q|{'title':'Tên khác'},revision=revision).status_code==409
+
+def test_voluntary_protection_syncs_preferences_but_not_selected_apps(client):
+    signup(client)
+    profile=get(client)['profile']
+    profile['protection']={'enabled':True,'breakInterval':45}
+    profile['selectedApps']=['com.instagram.android']
+    saved=action(client,'profile.save',profile)
+    assert saved.status_code==200,saved.text
+    assert saved.json()['profile']['protection']=={'enabled':True,'breakInterval':45}
+    assert 'selectedApps' not in saved.json()['profile']
+    profile['protection']={'enabled':True,'breakInterval':17}
+    assert action(client,'profile.save',profile).status_code==422
+
+def test_quick_action_accepts_two_minutes_and_never_grants_xp(client):
+    signup(client);q=quest(client)
+    started=action(client,'quick.start',{'title':'Đọc một đoạn','goal':'Học tập','questId':q['id'],'duration':2})
+    assert started.status_code==200,started.text
+    session=started.json()['quickSessions'][0]
+    assert session['duration']==2 and session['status']=='active' and started.json()['xp']==0
+    assert action(client,'quick.start',{'title':'Việc khác','duration':5}).status_code==409
+    with database.connection() as db:db.execute('UPDATE quick_sessions SET target_end=? WHERE id=?',((utc_now()-timedelta(seconds=1)).isoformat(),session['id']))
+    elapsed=get(client)
+    assert elapsed['quickSessions'][0]['status']=='elapsed' and elapsed['xp']==0
+    finished=action(client,'quick.finish',{'id':session['id'],'outcome':'unfinished'})
+    assert finished.status_code==200 and finished.json()['xp']==0
+    assert finished.json()['quests'][0]['status']=='pending'
+    assert finished.json()['quickSessions'][0]['outcome']=='unfinished'
 
 def test_logout_and_delete(client):
     signup(client);quest(client)

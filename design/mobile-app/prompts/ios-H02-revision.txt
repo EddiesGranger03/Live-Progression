@@ -1,0 +1,1 @@
+Precisely edit this active-focus Home screenshot: replace pause icon on Tiếp tục Focus button with right-pointing play triangle; add readable amber outlined label Chỉ có bộ đếm giờ inside active-session card above button. This button opens active timer, not pause. Preserve countdown 18:42, XP 440 Level 3 40/200, all other layout/colors/content.

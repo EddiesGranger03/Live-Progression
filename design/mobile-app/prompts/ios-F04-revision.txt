@@ -1,0 +1,1 @@
+Edit only the background bottom controls below the confirmation dialog: remove entire row of three circular controls Kết thúc, Tạm dừng, Âm thanh, replacing with plain navy background. App has no pause/music feature. Preserve the foreground confirmation dialog and all other content exactly.

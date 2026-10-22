@@ -1,0 +1,1 @@
+Edit this screenshot with minimal precise text changes only. This is NEW USER onboarding. Top-right Gia Long card must show Level 1 · 0 XP, progress 0/200 and empty progress track instead of Level 3 · 440 XP and 40/200. Preserve all other layout, typography, colors, Vietnamese words, 5 phút task duration and controls exactly. No redesign.

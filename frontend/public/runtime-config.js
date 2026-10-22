@@ -1,1 +1,7 @@
-window.SOLO_CONFIG = { mode: 'demo', api: '/api/v1' };
+(() => {
+  const nativeAssetOrigin = location.hostname === 'localhost';
+  window.SOLO_CONFIG = window.SOLO_CONFIG || {
+    mode: nativeAssetOrigin ? 'demo' : 'server',
+    api: '/api/v1'
+  };
+})();
