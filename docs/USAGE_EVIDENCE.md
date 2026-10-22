@@ -20,7 +20,7 @@ Tài liệu này tổng hợp bằng chứng kỹ thuật có thể tái tạo. 
 ## Giới hạn bằng chứng
 
 - AVD không cài TikTok/Instagram/Facebook và chưa được cấp Usage Access/Accessibility trong lần QA được ghi nhận. Vì vậy chưa có xác minh end-to-end nhắc/che trên app thật.
-- iOS project chưa được build bằng Xcode; iOS Screen Time restriction chưa được triển khai/entitlement.
+- Xcode CI trên macOS đã build thành công cho iOS Simulator, không ký app; chưa xác minh trên thiết bị. iOS Screen Time restriction chưa được triển khai và cần Family Controls entitlement cùng extension phù hợp.
 - Ảnh dùng seed/demo content; không đại diện cho phiên làm việc của người dùng thật. Dự án chưa thu thập hoặc xác nhận số lượt tải, active users, retention, contribution từ cộng đồng hay phản hồi production.
 - Không dùng số phút timer làm số liệu năng suất đã xác minh. Timer không tự đánh dấu nhiệm vụ hoàn thành hoặc cấp XP.
 

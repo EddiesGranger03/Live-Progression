@@ -41,7 +41,7 @@
 - AVD `emulator-5554`: cài APK cuối và mở được. Luồng Quick Action 2 phút chạy được; chọn **Bỏ qua** trả về form, giữ XP ở 140 và nhiệm vụ vẫn chờ xác nhận. Gợi ý dài hơn thời lượng đã chọn không còn xuất hiện; ảnh cuối ở `artifacts/solo-leveling-android-quick-final.png`.
 - Bảo vệ Focus mở được và hiện đúng trạng thái khi chưa cấp quyền. Android AccessibilityService chỉ subscribe `TYPE_WINDOW_STATE_CHANGED`, giới hạn package đã chọn và khai báo `canRetrieveWindowContent=false`; service không đọc text/window tree. Không cấp Usage Access/notification/Trợ năng trên AVD và emulator không có các app social nên chưa kiểm chứng nhắc hoặc overlay end-to-end.
 - `python -m pytest backend/tests -q --basetemp artifacts/pytest-final`: 16 passed; 1 cảnh báo deprecation từ Starlette/AnyIO.
-- iOS: project và plugin Swift được tạo, nhưng không thể biên dịch/chạy trên Windows vì cần macOS/Xcode. Screen Time restriction cố ý báo chưa khả dụng khi chưa có Apple Family Controls entitlement, extension và provisioning.
+- iOS: project và plugin Swift được tạo. Máy local Windows không có Xcode; GitHub Actions trên macOS/Xcode 26.6 đã build thành công target iOS Simulator, không ký app. Screen Time restriction vẫn chưa được triển khai; cần Family Controls entitlement, extension và provisioning trước khi kiểm thử trên thiết bị.
 - Android: lời nhắc Usage Access và che app bằng AccessibilityService được tách riêng, tự nguyện và chỉ trong Focus. Screen overlay cho phép mở Solo Leveling, tạm bỏ qua 10 phút cho đúng app hiện tại, hoặc tắt che tới hết phiên. UsageStats xử lý tên package được chọn, không lưu nội dung. Chưa kiểm tra end-to-end trên thiết bị có TikTok/Instagram/Facebook và chưa bật quyền trên emulator.
 - Google Play release vẫn cần AccessibilityService declaration/review, Data safety và công khai API trong listing; foreground service `specialUse` cũng cần khai báo/review phù hợp. Build debug không chứng minh việc được duyệt.
 
@@ -54,7 +54,7 @@
 - Demo và API cùng dùng các thao tác `goal.save`, `goal.priority`, `goal.archive`; `goalId` là liên kết tùy chọn trên nhiệm vụ và không thay trường lĩnh vực `goal` hiện có.
 - Mục tiêu ưu tiên chỉ thay thứ tự hiển thị; lưu trữ/khôi phục không xóa nhiệm vụ hoặc ledger XP.
 - Android: `npm run mobile:sync` và Gradle `assembleDebug` PASS; APK đã cài đè bằng `adb install -r` lên `emulator-5554`, mở app và điều hướng tới danh sách Mục tiêu được. Cache trải nghiệm cũ có 0 mục tiêu độc lập; UI hiển thị empty state và nút tạo mới đúng.
-- iOS Screen Time vẫn chưa được triển khai/kiểm chứng: thiếu macOS/Xcode để tạo, ký và chạy target extension, cùng Family Controls entitlement Apple cần cấp cho app và extension trước khi phân phối.
+- iOS Screen Time vẫn chưa được triển khai/kiểm chứng: Xcode CI đã build simulator, nhưng app/extension chưa được ký và chạy trên thiết bị; cần Family Controls entitlement và cấu hình extension/provisioning trước khi xác minh luồng thật.
 
 ## Hoàn thiện restriction tự nguyện — 21/10/2026
 
