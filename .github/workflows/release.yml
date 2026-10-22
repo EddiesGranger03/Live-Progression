@@ -3,12 +3,14 @@ name: Publish release
 on:
   push:
     tags: ['v*']
+    branches: [main]
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Publish changelog entry
     runs-on: ubuntu-latest
     steps:
@@ -28,3 +30,33 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" --title "Solo Leveling $GITHUB_REF_NAME" --notes-file "$RUNNER_TEMP/release-notes.md"
+
+  sync-release-notes:
+    if: github.ref == 'refs/heads/main'
+    name: Sync published notes from changelog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Extract current version notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p 'require("./package.json").version')"
+          awk -v heading="## [$version]" '
+            index($0, heading) == 1 { found = 1; next }
+            /^## \[/ && found { exit }
+            found { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/release-notes.md"
+          test -s "$RUNNER_TEMP/release-notes.md"
+      - name: Update existing GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p 'require("./package.json").version')"
+          if gh release view "v$version" >/dev/null 2>&1; then
+            gh release edit "v$version" --title "Solo Leveling v$version" --notes-file "$RUNNER_TEMP/release-notes.md"
+          else
+            echo "No published release found for v$version; nothing to sync."
+          fi

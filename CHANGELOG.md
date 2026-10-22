@@ -20,7 +20,7 @@ Các thay đổi đáng chú ý của Solo Leveling được ghi theo phiên b�
 
 ### Giới hạn đã biết
 
-- iOS Screen Time restriction chưa được triển khai; project iOS chưa được build/ký bằng macOS/Xcode.
+- iOS Screen Time restriction chưa được triển khai. Xcode CI đã build thành công cho iOS Simulator; app chưa được ký hoặc kiểm thử trên thiết bị thật.
 - Android overlay chưa được kiểm thử end-to-end trên thiết bị có ứng dụng mạng xã hội và quyền hệ thống đã bật.
 - Chưa có số liệu người dùng, tải xuống, retention hoặc phản hồi production được xác nhận.
 - SMTP, vận hành production nhiều instance và quy trình duyệt Google Play còn cần cấu hình/kiểm tra riêng.

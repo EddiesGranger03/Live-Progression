@@ -4,7 +4,7 @@
 
 Repository của nhóm: [EddiesGranger03/Live-Progression](https://github.com/EddiesGranger03/Live-Progression).
 
-Ứng dụng tiếng Việt gồm web Angular/FastAPI và vỏ Android/iOS bằng Capacitor, theo bản đồ màn hình v0.2 và bộ ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng. Android có tích hợp bảo vệ Focus tự nguyện; iOS hiện chưa có Screen Time restriction và chưa được build trên Xcode.
+Ứng dụng tiếng Việt gồm web Angular/FastAPI và vỏ Android/iOS bằng Capacitor, theo bản đồ màn hình v0.2 và bộ ảnh navy được cung cấp. Bốn mục điều hướng: Hôm nay, Lịch, Tiến bộ, Cá nhân. Nhiệm vụ và Focus nằm trong luồng, không thêm tab riêng. Android có tích hợp bảo vệ Focus tự nguyện; project iOS đã build được trên iOS Simulator bằng Xcode CI, nhưng chưa ký/chạy trên thiết bị và chưa có Screen Time restriction.
 
 ## Đội ngũ dự án
 
