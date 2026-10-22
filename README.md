@@ -139,7 +139,7 @@ Font Be Vietnam Pro theo SIL Open Font License, đóng gói qua `@fontsource/be-
 ## Đóng góp, demo và bảo trì
 
 - [Hướng dẫn đóng góp](CONTRIBUTING.md) và các mẫu GitHub Issues nằm trong `.github/ISSUE_TEMPLATE/`.
-- [Issues công khai](https://github.com/EddiesGranger03/Live-Progression/issues) theo dõi kiểm thử Android, hỗ trợ iOS và bảo trì staging/production.
+- [Issues công khai](https://github.com/EddiesGranger03/Live-Progression/issues) theo dõi kiểm thử Android, hỗ trợ iOS, bảo mật dependency và bảo trì staging/production.
 - [Kết quả CI](.github/workflows/ci.yml) chạy kiểm tra frontend, backend, Android và iOS trên pull request vào `main`.
 - [Bằng chứng demo](docs/USAGE_EVIDENCE.md) ghi rõ ảnh chụp emulator, kiểm thử đã chạy và giới hạn số liệu người dùng.
 - [Lịch bảo trì](docs/MAINTENANCE.md) theo dõi việc cần làm; [CHANGELOG](CHANGELOG.md) ghi lịch sử phiên bản.

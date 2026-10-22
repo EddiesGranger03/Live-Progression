@@ -71,4 +71,6 @@
 - Trên Windows / Node.js 24.21.0, `npm run check` và `npm run build`: PASS.
 - Sáu workflow/Issue YAML parse được bằng PyYAML 6.0.3; `git diff --cached --check`: PASS.
 - Backend pytest trên Windows / Python 3.14.7 bị treo khi Starlette `TestClient` mở AnyIO blocking portal. `faulthandler` chỉ ra Proactor event loop đang chờ `socket.accept()` trong `_make_self_pipe`; đây không phải kết quả test đạt. Workflow CI chạy pytest trên Ubuntu / Python 3.12 để kiểm tra riêng môi trường Linux.
-- Chưa chạy Android Gradle tại máy này vì không có `java` trong PATH; chưa chạy Xcode vì môi trường là Windows. Workflow CI có job build Android và iOS simulator; kết quả sẽ được ghi lại sau khi GitHub Actions chạy.
+- GitHub Actions run #2 cho commit `90831f6`: PASS cả bốn job. Backend `19 passed` (1 cảnh báo deprecation Starlette/AnyIO); Android `assembleDebug` PASS với Gradle 8.14.3 / AGP 8.13.0 / JDK 21; iOS simulator build PASS trên Xcode 26.6, không ký app.
+- `npm ci` báo 5 npm audit findings (1 low, 3 moderate, 1 high) trong dependency tree. `npm audit fix --dry-run` đề xuất 0 cập nhật tự động; gợi ý hạ `@capacitor/cli` cần kiểm tra tương thích. Đã theo dõi tại [Issue #5](https://github.com/EddiesGranger03/Live-Progression/issues/5); chưa khẳng định các package này có trong runtime production.
+- Build iOS simulator chỉ xác nhận project compile được; không đồng nghĩa Screen Time restriction đã triển khai hoặc được Apple cấp entitlement. Android CI cũng không thay thế kiểm thử overlay trên thiết bị có app mạng xã hội thật.
